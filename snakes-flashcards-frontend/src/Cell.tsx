@@ -12,7 +12,7 @@ function CellContainer(props: props) {
   const cellData = props.cell
   const isConnectFrom = cellData.isHead || cellData.isLadderBtm;
   const childPlayers = cellData.players.map((pl, index) => <PlayerContainer p={pl} index={index}></PlayerContainer>)
-  const bg = cellData.isDrawAgain ? 'blue' : cellData.isSkipNext ? 'purple' : 'grey'
+  const bg = cellData.isDrawAgain ? 'purple' : cellData.isSkipNext ? 'purple' : 'grey'
   return (
     <div className='CellContainer' style={{backgroundColor: bg}}>
       {cellData.index}
