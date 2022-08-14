@@ -60,10 +60,17 @@
 }
 .bottom-panel {
   display: flex;
+  height: 100px
 }
 
 .turn-indicator {
   height: 40px;
   width: 40px;
   border-radius: 10px;
+}
+
+.win-message {
+  font-weight: bold;
+  font-size: xx-large;
+  padding-left: 10px;
 }

@@ -1,17 +1,4 @@
-export const spanishWords = {
-  "Translate 'Hola' to English": "Hello",
-  "Translate 'Adiós' to English": "Goodbye",
-  "Translate 'Por favor' to English": "Please",
-  "Translate 'Gracias' to English": "Thank you",
-  "Translate 'Lo siento' to English": "Sorry",
-  "Translate 'Salud' to English": "Bless you (after someone sneezes)",
-  "Translate 'Sí' to English": "Yes",
-  "Translate 'No' to English": "No",
-  "Translate '¿Quién?' to English": "Who?",
-  "Translate '¿Qué?' to English": "What?",
-  "Translate '¿Por qué?' to English": "Why?",
-  "Translate '¿Dónde?' to English": "Where?",
-};
+import { spanishQuestions } from "./spanishWords";
 
 export function newGame() {
   return new Game(
@@ -26,7 +13,7 @@ export function newGame() {
     { 2: 32, 9: 23 },
     new Set([5, 10, 34, 16, 12, 18, 24, 28]),
     new Set([]),
-    spanishWords
+    spanishQuestions
   );
 }
 
@@ -136,10 +123,15 @@ export class Game {
     }
 
     // Move the player
+    let turnChanged = false
     const oldPos = this.curPlayer().pos;
     this.lastDice = diceThrow();
     let newPos = oldPos + this.lastDice;
-    newPos = newPos < this.nCells() ? newPos : oldPos;
+    if (newPos >= this.nCells()) {
+      newPos = oldPos;
+      turnChanged = true
+      this.turn = (this.turn + 1) % this.players.length
+    }
     this.curPlayer().pos = newPos;
     if (newPos == this.nCells() - 1) this.winner = this.curPlayer();
 
@@ -154,8 +146,13 @@ export class Game {
     }
 
     // Update turn:
-    if (!this.playerToUpdate && !this.waitingOnFlashCard) this.turn = (this.turn + 1) % this.players.length;
+    if (!turnChanged && !this.playerToUpdate && !this.waitingOnFlashCard) this.turn = (this.turn + 1) % this.players.length;
     console.log("newPos: " + newPos);
+
+    //Check Win:
+    if (this.curPlayer().pos == this.nCells()-1)
+      this.winner = this.curPlayer()
+
     return this;
   }
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import Board from "./Board";
 import FlashCard from "./flashcard";
+import PlayerContainer from "./PlayerContainer";
 import { Cell, Game, newGame, numWords } from "./utils";
 import { Player } from "./utils";
 
@@ -40,6 +41,26 @@ function GameContainer(props: props) {
   
   // Show Dice
   const lastDiceStr = numWords[g.lastDice];
+
+  if (g.winner != null) {
+    const w = g.winner
+    return (
+<div className="GameContainer">
+      <Board cells={g.cellList()} nRows={g.nRows} nCols={g.nCols}></Board>
+      <div className="bottom-panel">
+        <button
+          className={"dice " + lastDiceStr}
+          onClick={onDiceClick}
+        ></button>
+        <button
+          className="turn-indicator"
+          style={{ backgroundColor: g.curPlayer().color }}
+        ></button>
+        <div className="win-message">Is the winner!</div>
+      </div>
+    </div>
+    )
+  }
 
   return (
     <div className="GameContainer">
