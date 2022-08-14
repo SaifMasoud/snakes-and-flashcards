@@ -1,0 +1,35 @@
+.App {
+  height: 90vh;
+  width: 90vw;
+}
+
+.Board {
+  /* object-fit: cover; */
+  max-height: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+
+.CellContainer {
+  display: grid;
+  grid-template-rows: 33% 33% 33%;
+  grid-template-columns: 33% 33% 33%;
+  border-style: solid;
+  /* background-color: lightgrey; */
+}
+
+.Connector {
+  grid-row: 3/4;
+  grid-column: 2/3;
+}
+
+.PlayerContainer {
+  /* background-color: red; */
+  border-radius: 100%;
+}
+
+.GameContainer {
+  height: 100%;
+  width: 100%;
+}
