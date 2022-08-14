@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import Board from './Board';
-import { Cell, Game, newGame2 } from './utils';
+import { Cell, Game, newGame, numWords } from './utils';
 import {Player} from './utils'
 
 
@@ -20,9 +20,14 @@ function GameContainer(props: props) {
         setX((x + 1) % 2)
     }
 
+    const lastDiceStr = numWords[g.lastDice]
   return (
-    <div className="GameContainer" onClick={onClick}>
+    <div className="GameContainer" >
         <Board cells={g.cellList()} nRows={g.nRows} nCols={g.nCols}></Board>
+        <div className='bottom-panel'>
+            <div className={'dice ' + lastDiceStr} onClick={onClick}></div>
+            <button className='turn-indicator' style={{backgroundColor: g.curPlayer().color}}></button>
+        </div>
     </div>
   );
 }

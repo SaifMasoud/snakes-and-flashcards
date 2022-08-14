@@ -1,9 +1,7 @@
 export function newGame() {
-    return new Game(6, 6, [new Player(0, "player_id", "red"), new Player(0, '', "yellow"), new Player(0, '', 'blue')], {3: 7}, {}, new Set([5, 8]), new Set([7, 14]))
+    return new Game(6, 6, [new Player(0, "player_id", "red"), new Player(0, '', "yellow"), new Player(0, '', 'pink')], {7: 3}, {2: 32, 9:23}, new Set([5, 8]), new Set([7, 14]))
 }
-export function newGame2() {
-    return new Game(6, 6, [new Player(0, "player_id", "red"), new Player(5, '', "yellow"), new Player(7, '', 'blue')], {3: 7}, {}, new Set([5, 8]), new Set([7, 14]))
-}
+
 
 export function diceThrow() {
     return Math.floor(Math.random() * (6 - 1) ) + 1;
@@ -42,6 +40,16 @@ export class Cell {
     
 }
 
+export const numWords: Record<number, string>  = {
+    0: 'zero',
+    1: 'one',
+    2: 'two',
+    3: 'three',
+    4: 'four',
+    5: 'five',
+    6: 'six'
+}
+
 export class Game {
     nCols: number;
     nRows: number;
@@ -56,6 +64,7 @@ export class Game {
     needToUpdateSnakeLadder: boolean = false;
     playerToUpdate: Player | null = null
     winner: Player | null = null
+    lastDice: number = 6
     
     constructor
     (
@@ -83,12 +92,14 @@ export class Game {
             const pos = this.playerToUpdate.pos
             this.playerToUpdate.pos = pos in this.snakes ? this.snakes[pos] : this.ladders[pos]
             this.playerToUpdate = null
+            this.turn = (this.turn + 1) % this.players.length
             return this
         }
 
         // Move the player
         const oldPos = this.curPlayer().pos
-        let newPos = oldPos + diceThrow();
+        this.lastDice = diceThrow();
+        let newPos = oldPos + this.lastDice;
         newPos = newPos < this.nCells() ? newPos : oldPos
         this.curPlayer().pos = newPos
         if (newPos == this.nCells() - 1) this.winner = this.curPlayer()
@@ -101,7 +112,8 @@ export class Game {
         
 
         // Update turn:
-        this.turn = (this.turn + 1) % this.players.length
+        if (!(this.playerToUpdate))
+            this.turn = (this.turn + 1) % this.players.length
         console.log('newPos: ' + newPos)
         return this
     }
@@ -128,8 +140,6 @@ export class Game {
 
     curPlayer() {
         return this.players[this.turn]
-    }
-    
-    
+    }   
 }
     

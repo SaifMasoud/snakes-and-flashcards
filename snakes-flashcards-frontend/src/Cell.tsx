@@ -17,7 +17,7 @@ function CellContainer(props: props) {
     <div className='CellContainer' style={{backgroundColor: bg}}>
       {cellData.index}
       {childPlayers}
-      <Connector indexToConnectTo={isConnectFrom ? cellData.connectTo : null} indexSelf={props.cell.index}></Connector>
+      <Connector isSnake={props.cell.isHead} indexToConnectTo={isConnectFrom ? cellData.connectTo : null} indexSelf={props.cell.index}></Connector>
     </div>
   );
 }
